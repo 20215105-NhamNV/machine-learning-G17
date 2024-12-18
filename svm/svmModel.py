@@ -219,7 +219,7 @@ print("1. svm tuyến tính")
 print("2. svm phi tuyến")
 print("3. svm tuyến tính với với model sau khi train và tập test.csv tự tạo")
 print("4. svm phi tuyến với model sau khi train và tập test.csv tự tạo")
-choose = int(input("Nhập lựa chọn (1 hoặc 2): "))
+choose = int(input("Nhập lựa chọn (1, 2, 3 hoac 4): "))
 if (choose == 1):
     print("Đang xử lí...")
     start_time = time()
