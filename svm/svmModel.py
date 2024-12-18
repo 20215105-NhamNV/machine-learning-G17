@@ -226,7 +226,7 @@ if (choose == 1):
     matrix, result = implementSVM(X_train, Y_train, X_test, Y_test, parameters, str(type['2']))
     write_to_file(matrix, result, parameters, type, start_time)
     k += 1
-    print("Done : 1")
+    print("Done : kết quả với tập test mặc định được lưu vào file result1.txt")
 
 if (choose == 2):
     print("Đang xử lí...")
@@ -234,7 +234,7 @@ if (choose == 2):
     matrix, result = implementSVM(X_train, Y_train, X_test, Y_test, parameters, str(type['1']))
     write_to_file(matrix, result, parameters, type, start_time)
     k += 1
-    print("Done : 2")
+    print("Done : kết quả với tập test mặc định được lưu vào file result1.txt")
 
 if (choose == 3):
     print("Đang xử lí...")
