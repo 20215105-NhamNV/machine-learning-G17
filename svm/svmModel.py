@@ -150,13 +150,13 @@ def implementSVM(X_train,Y_train,X_test,Y_test,parameters,type):
         predictor = trainer.train(X_train,Y_train)
     for i in range(X_test.shape[0]):
         ans = predictor.predict(X_test[i])
-        if(ans==-1 and Y_test[i]==-1):
+        if(ans==1 and Y_test[i]==1):
             spam_spam+=1
-        elif(ans==1 and Y_test[i]==-1):
-            spam_ham+=1
-        elif(ans==1 and Y_test[i]==1):
-            ham_ham+=1
         elif(ans==-1 and Y_test[i]==1):
+            spam_ham+=1
+        elif(ans==-1 and Y_test[i]==-1):
+            ham_ham+=1
+        elif(ans==1 and Y_test[i]==-1):
             ham_spam+=1
     return confusion_matrix(ham_ham,ham_spam,spam_ham,spam_spam)
 

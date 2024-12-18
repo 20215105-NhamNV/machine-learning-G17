@@ -1,0 +1,13 @@
+
++------+------+------+
+|      | Ham  | Spam |
++------+------+------+
+| Ham  | 1404 |  38  |
+| Spam |  28  | 200  |
++------+------+------+
+Precision : 0.97
+Recall : 0.98
+Time spent for model : 147.78
+
+
+Time spent for entire code : 443.89
