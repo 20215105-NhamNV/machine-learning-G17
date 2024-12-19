@@ -1,0 +1,10 @@
+Kết quả kiểm tra với tập test.csv
++------+-----+------+
+|      | Ham | Spam |
++------+-----+------+
+| Ham  |  6  |  0   |
+| Spam |  0  |  4   |
++------+-----+------+
+Precision : 1.0
+Recall : 1.0
+Accuracy : 1.0

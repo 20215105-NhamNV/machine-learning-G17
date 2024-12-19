@@ -8,6 +8,10 @@ import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 from prettytable import PrettyTable
 import json
+import string
+from time import time
+from nltk.corpus import stopwords
+from nltk.stem.wordnet import WordNetLemmatizer
 
 MIN_SUPPORT_VECTOR_MULTIPLIER = 1e-5
 
@@ -219,7 +223,9 @@ print("1. svm tuyến tính")
 print("2. svm phi tuyến")
 print("3. svm tuyến tính với với model sau khi train và tập test.csv tự tạo")
 print("4. svm phi tuyến với model sau khi train và tập test.csv tự tạo")
-choose = int(input("Nhập lựa chọn (1, 2, 3 hoac 4): "))
+print("5.svm tuyến tính với với model sau khi train với email người dùng nhập vào")
+print("6.svm phi với với model sau khi train với email người dùng nhập vào")
+choose = int(input("Nhập lựa chọn (1, 2, 3, 4, 5 hoặc 6): "))
 if (choose == 1):
     print("Đang xử lí...")
     start_time = time()
@@ -314,6 +320,66 @@ if (choose == 4):
         f.write("Accuracy : " + str(round(result['accuracy'], 2)) + "\n")
     print("Hoàn thành! Kết quả được lưu vào result.txt.")
 
+if (choose == 5):
+    email = input("enter your email:")
+    email = email.encode('ascii', 'ignore').decode()  # Bỏ ký tự không ASCII
+    # Đọc danh sách từ từ file CSV
+    df_words = pd.read_csv('wordslist1.csv', header=0)
+    words = df_words['word']
+
+    # Tạo lemmatizer
+    lmtzr = WordNetLemmatizer()
+
+    # Khởi tạo mảng tần suất từ
+    words_list_array = np.zeros(words.size,dtype=int)
+
+    for word in email.split():
+        word = lmtzr.lemmatize(word.lower())
+        if (word in stopwords.words('english') or word in string.punctuation 
+                or len(word) <= 2 or word.isdigit()):
+            continue
+        for i, w in enumerate(words):
+            if w == word:
+                words_list_array[i] += 1
+                break
+
+    predictor = load_model_from_json("linear_model.json", Kernel.linear())
+    ans = predictor.predict(words_list_array)
+    if ans == 1:
+        print("this email is spam")
+    if ans == -1:
+        print("this email is not spam")
+
+if (choose == 6):
+    email = input("enter your email:")
+    email = email.encode('ascii', 'ignore').decode()  # Bỏ ký tự không ASCII
+    # Đọc danh sách từ từ file CSV
+    df_words = pd.read_csv('wordslist1.csv', header=0)
+    words = df_words['word']
+
+    # Tạo lemmatizer
+    lmtzr = WordNetLemmatizer()
+
+    # Khởi tạo mảng tần suất từ
+    words_list_array = np.zeros(words.size,dtype=int)
+
+    for word in email.split():
+        word = lmtzr.lemmatize(word.lower())
+        if (word in stopwords.words('english') or word in string.punctuation 
+                or len(word) <= 2 or word.isdigit()):
+            continue
+        for i, w in enumerate(words):
+            if w == word:
+                words_list_array[i] += 1
+                break
+    
+    predictor = load_model_from_json("polykernel_model.json", Kernel.polykernel(parameters['dimension'], parameters['offset']))
+    ans = predictor.predict(words_list_array)
+    if ans == 1:
+        print("this email is spam")
+    if ans == -1:
+        print("this email is not spam")
+        
 f = open("results1.txt", "a")
 f.write("Time spent for entire code : " + str(round(time() - global_start_time, 2)))
 f.close()
